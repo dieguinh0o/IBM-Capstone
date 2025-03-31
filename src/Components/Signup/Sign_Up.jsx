@@ -1,5 +1,8 @@
-import { useState } from "react";
 import "./Sign_Up.css";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../../config.js';
+
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -10,6 +13,7 @@ export default function SignUp() {
     });
 
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate(); // Navigation hook from react-router
 
     // Handle input change
     const handleChange = (e) => {
@@ -41,11 +45,37 @@ export default function SignUp() {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            alert("Form submitted successfully!");
-            // Process form submission (e.g., API call)
+            const response = await fetch(`${API_URL}/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+            
+            const json = await response.json(); // Parse the response JSON
+
+            if (json.authtoken) {
+                // Store user data in session storage
+                sessionStorage.setItem("auth-token", json.authtoken);
+                sessionStorage.setItem("name", formData.name);
+                sessionStorage.setItem("phone", formData.phone);
+                sessionStorage.setItem("email", formData.email);
+                // Redirect user to home page
+                navigate("/");
+                window.location.reload(); // Refresh the page
+            } else {
+                if (json.errors) {
+                    for (const error of json.errors) {
+                        setShowerr(error.msg); // Show error messages
+                    }
+                } else {
+                    setShowerr(json.error);
+                }
+            }
         }
     };
 
@@ -60,7 +90,7 @@ export default function SignUp() {
                         Already a member? <span><a href="../Login/Login.html" style={{ color: "#2190FF" }}>Login</a></span>
                     </div>
                     <div className="signup-form">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} method="POST">
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
                                 <input type="text" name="name" id="name" className="form-control" placeholder="Enter your name"
