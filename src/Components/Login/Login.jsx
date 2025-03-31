@@ -1,14 +1,51 @@
+import { useState } from "react";
+import "./Login.css";
+
 export default function Login() {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const [errors, setErrors] = useState({});
+
+    // Handle input change
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // Form validation logic
+    const validateForm = () => {
+        let newErrors = {};
+
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
+            newErrors.email = "Invalid email format.";
+        }
+
+        if (formData.password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Returns true if no errors
+    };
+
+    // Handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            alert("Login successful!");
+            // Process login (e.g., API call)
+        }
+    };
+
     return (
         <div>
             <div className="container">
-                {/* Div for login grid layout */}
                 <div className="login-grid">
-                    {/* Div for login text */}
                     <div className="login-text">
                         <h2>Login</h2>
                     </div>
-                    {/* Additional login text with a link to Sign Up page */}
                     <div className="login-text">
                         Are you a new member? 
                         <span>
@@ -16,10 +53,8 @@ export default function Login() {
                         </span>
                     </div>
                     <br />
-                    {/* Div for login form */}
                     <div className="login-form">
-                        <form>
-                            {/* Form group for email input */}
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <input 
@@ -28,10 +63,12 @@ export default function Login() {
                                     id="email" 
                                     className="form-control" 
                                     placeholder="Enter your email" 
-                                    aria-describedby="helpId" 
+                                    value={formData.email} 
+                                    onChange={handleChange} 
                                 />
+                                {errors.email && <small className="text-danger">{errors.email}</small>}
                             </div>
-                            {/* Form group for password input */}
+
                             <div className="form-group">
                                 <label htmlFor="password">Password</label>
                                 <input
@@ -40,16 +77,21 @@ export default function Login() {
                                     id="password"
                                     className="form-control"
                                     placeholder="Enter your password"
-                                    aria-describedby="helpId"
+                                    value={formData.password} 
+                                    onChange={handleChange} 
                                 />
+                                {errors.password && <small className="text-danger">{errors.password}</small>}
                             </div>
-                            {/* Button group for login and reset buttons */}
+
                             <div className="btn-group">
                                 <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Login</button> 
-                                <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light">Reset</button>
+                                <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light"
+                                    onClick={() => setFormData({ email: "", password: "" })}
+                                >
+                                    Reset
+                                </button>
                             </div>
                             <br />
-                            {/* Additional login text for 'Forgot Password' option */}
                             <div className="login-text">
                                 Forgot Password?
                             </div>
