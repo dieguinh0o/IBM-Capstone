@@ -9,7 +9,7 @@ import Navbar from './Components/Navbar/Navbar.jsx';
 import Landing_page from './Components/LandingPage/LandingPage.jsx';
 import SignUp from './Components/Signup/Sign_Up.jsx';
 import Login from './Components/Login/Login.jsx';
-import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation.js'
+import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation.jsx'
 
 
 // Function component for the main App
