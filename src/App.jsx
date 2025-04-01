@@ -9,6 +9,7 @@ import Navbar from './Components/Navbar/Navbar.jsx';
 import Landing_page from './Components/LandingPage/LandingPage.jsx';
 import SignUp from './Components/Signup/Sign_Up.jsx';
 import Login from './Components/Login/Login.jsx';
+import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation.js'
 
 
 // Function component for the main App
@@ -24,10 +25,10 @@ function App() {
 
           {/* Set up the Routes for different pages */}
         <Routes>
-                <Route path="/" element={<Landing_page/>}/>
-                <Route path="/Signup" element={<SignUp/>}/>
-                <Route path="/Login" element={<Login/>}/>
-
+            <Route path="/" element={<Landing_page/>}/>
+            <Route path="/Signup" element={<SignUp/>}/>
+            <Route path="/Login" element={<Login/>}/>
+            <Route path="/instant-consultation" element={<InstantConsultation />} />
         </Routes>
         </BrowserRouter>
     </div>
