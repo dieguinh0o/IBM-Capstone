@@ -1,46 +1,49 @@
+/* Sticky Notification Container */
 .notification-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 20px;
+    right: 20px;
     background: white;
-    padding: 20px;
-    width: 400px;
-    max-width: 90%;
-    border-radius: 12px;
+    padding: 15px;
+    width: 300px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
     z-index: 1000;
+    text-align: left;
+    animation: slideIn 0.3s ease-out;
 }
 
+/* Slide-in Animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Notification Text */
 .notification-container p {
-    font-size: 16px;
-    margin: 10px 0;
+    font-size: 14px;
+    margin: 5px 0;
 }
 
+/* Close Button */
 .notification-container button {
-    background-color: #007bff;
+    background-color: #ff4d4d;
     color: white;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-    font-size: 16px;
+    font-size: 14px;
     transition: background 0.3s;
+    margin-top: 10px;
 }
 
 .notification-container button:hover {
-    background-color: #0056b3;
-}
-
-/* Dark background overlay */
-.notification-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    background-color: #cc0000;
 }
