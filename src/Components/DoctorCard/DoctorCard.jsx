@@ -56,7 +56,7 @@ export default function DoctorCard() {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="close-btn" onClick={closeForm}>✖</button>
                         <h3>Book an Appointment with {selectedDoctor.Name}</h3>
-                        <AppointmentForm />
+                        <AppointmentForm doctorData = {selectedDoctor} />
                     </div>
                 </div>
             )}

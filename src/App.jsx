@@ -11,6 +11,7 @@ import SignUp from './Components/Signup/Sign_Up.jsx';
 import Login from './Components/Login/Login.jsx';
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation.jsx'
 import FindDoctorSearch from './Components/FindDoctorSearch/FindDoctorSearch.jsx'
+import Notification from './Components/Notification/Notification.jsx'
 
 // Function component for the main App
 function App() {
@@ -20,9 +21,8 @@ function App() {
     <div className="App">
         {/* Set up BrowserRouter for routing */}
         <BrowserRouter>
+        <Notification>
           {/* Display the Navbar component */}
-          <Navbar/>
-
           {/* Set up the Routes for different pages */}
         <Routes>
             <Route path="/" element={<Landing_page/>}/>
@@ -30,6 +30,7 @@ function App() {
             <Route path="/Login" element={<Login/>}/>
             <Route path="/instant-consultation" element={<FindDoctorSearch />} />
         </Routes>
+        </Notification>
         </BrowserRouter>
     </div>
   );

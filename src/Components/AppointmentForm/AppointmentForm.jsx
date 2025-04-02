@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./AppointmentForm.css"; // Ensure to create and import this CSS file
 
-export default function AppointmentForm() {
+export default function AppointmentForm(props) {
     const [patientName, setPatientName] = useState("");
     const [appointmentDate, setAppointmentDate] = useState("");
     const [patientPhone, setPatientPhone] = useState("");
     const [timeSlot, setTimeSlot] = useState("13:00");
+    const doctorData = props.doctorData;
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -13,9 +14,21 @@ export default function AppointmentForm() {
             alert("Please fill in all fields.");
             return;
         }
-        alert(`Appointment booked for ${patientName} on ${appointmentDate} at ${timeSlot}`);
+        //Write notification display logic here
+        const appointmentData = {
+            doctor: {
+                name: doctorData.Name,
+                speciality: doctorData.Speciality
+            },
+            patient: {
+                name: patientName,
+                phone: patientPhone
+            },
+            date: appointmentDate,
+            time: timeSlot
+        }
+        localStorage.setItem("AppointmentData", JSON.stringify(appointmentData))
     }
-
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
