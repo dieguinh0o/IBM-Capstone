@@ -97,8 +97,8 @@ const Navbar = () => {
 
                 {isLoggedIn ? (
                     <li className="link profile-dropdown">
-                        <p onClick={handleDropdown} className="profile-name">Welcome, {username}</p>
-                        {showDropdown && <ProfileCard position={dropdownPosition} />}
+                        <p onClick={handleDropdown}>Welcome, {username}</p>
+                        {showDropdown && <ProfileCard />}
                         <button className="btn2" onClick={handleLogout}>
                             Logout
                         </button>
