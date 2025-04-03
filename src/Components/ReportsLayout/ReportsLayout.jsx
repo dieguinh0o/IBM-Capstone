@@ -1,33 +1,37 @@
 import { useState } from "react";
-import "./ReviewForm.css";
-import FeedbackForm from "./FeedbackForm/FeedbackForm.jsx";
+import "./ReportsLayout.css";
 
 export default function ReportsLayout() {
-    const [reviews, setReviews] = useState([
-        { id: 1, name: "Dr. John Smith", speciality: "Dentist", feedback: "" },
-        { id: 2, name: "Dr. Alice Johnson", speciality: "Gynecologist", feedback: "" },
-        { id: 3, name: "Dr. Michael Lee", speciality: "General Physician", feedback: "" },
-        { id: 3, name: "Dr. Lin Chao", speciality: "Dentist", feedback: "" }
+    const [reports, setReports] = useState([
+        { id: 1, name: "Dr. John Smith", speciality: "Dentist", report: "" },
+        { id: 2, name: "Dr. Alice Johnson", speciality: "Gynecologist", report: "" },
+        { id: 3, name: "Dr. Michael Lee", speciality: "General Physician", report: "" },
+        { id: 4, name: "Dr. Lin Chao", speciality: "Dentist", report: "" } // Fixed duplicate ID
     ]);
 
-    const [formId, setFormId] = useState(null);
-    const [showForm, setShowForm] = useState(false);
+    const [reportId, setReportId] = useState(null);
+    const [showReport, setShowReport] = useState(false);
 
-    const handleSubmit = (id, feedback) => {
-        setReviews(reviews.map(review =>
-            review.id === id ? { ...review, feedback } : review
+    const handleSubmit = (id, newReport) => {
+        setReports(reports.map(report =>
+            report.id === id ? { ...report, report: newReport } : report
         ));
-        setShowForm(false); // Hide form after submission
+        setShowReport(false);
     };
 
-    const handleShowForm = (id) => {
-        setFormId(id);
-        setShowForm(true);
+    const handleShowReport = (id) => {
+        setReportId(id);
+        setShowReport(true);
+    };
+
+    const handleDownloadReport = (id) => {
+        alert(`Downloading report for Doctor ID: ${id}`);
+        // Implement actual download logic here
     };
 
     return (
         <>
-            <div className="reports-form-container">
+            <div className="reports-container">
                 <h3>Reports</h3>
                 <table>
                     <thead>
@@ -40,21 +44,21 @@ export default function ReportsLayout() {
                         </tr>
                     </thead>
                     <tbody>
-                        {reviews.map((review, index) => (
-                            <tr key={review.id}>
+                        {reports.map((report, index) => (
+                            <tr key={report.id}>
                                 <td>{index + 1}</td>
-                                <td>{review.name}</td>
-                                <td>{review.speciality}</td>
+                                <td>{report.name}</td>
+                                <td>{report.speciality}</td>
                                 <td>
-                                    <button 
-                                        onClick={() => handleShowForm(review.id)} 
-                                        disabled={!!review.feedback} // Disable if feedback exists
-                                        className={review.feedback ? "disabled-btn" : ""}
-                                    >
-                                        {review.feedback ? "Feedback Given" : "Click Here"}
+                                    <button onClick={() => handleShowReport(report.id)}>
+                                        View Report
                                     </button>
                                 </td>
-                                <td>{review.feedback || "No review yet"}</td>
+                                <td> 
+                                    <button onClick={() => handleDownloadReport(report.id)}>
+                                        Download Report
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -62,11 +66,18 @@ export default function ReportsLayout() {
             </div>
 
             {/* Popup Modal */}
-            {showForm && (
+            {showReport && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <button className="close-btn" onClick={() => setShowForm(false)}>✖</button>
-                        <FeedbackForm onSubmit={handleSubmit} id={formId} />
+                        <button className="close-btn" onClick={() => setShowReport(false)}>✖</button>
+                        <h3>Report Details</h3>
+                        <textarea
+                            rows="5"
+                            cols="50"
+                            placeholder="Enter report details..."
+                            value={reports.find(r => r.id === reportId)?.report || ""}
+                            onChange={(e) => handleSubmit(reportId, e.target.value)}
+                        />
                     </div>
                 </div>
             )}

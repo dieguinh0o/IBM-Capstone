@@ -14,6 +14,7 @@ import FindDoctorSearch from './Components/FindDoctorSearch/FindDoctorSearch.jsx
 import Notification from './Components/Notification/Notification.jsx'
 import ReviewForm from './Components/ReviewForm/ReviewForm.jsx';
 import Profile from './Components/Profile/Profile.jsx';
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout.jsx';
 
 // Function component for the main App
 function App() {
@@ -33,7 +34,7 @@ function App() {
             <Route path="/instant-consultation" element={<FindDoctorSearch />} />
             <Route path="/Reviews" element={<ReviewForm />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/yourreports" element={<Profile />} />
+            <Route path="/yourreports" element={<ReportsLayout />} />
         </Routes>
         </Notification>
         </BrowserRouter>
