@@ -55,9 +55,11 @@ export default function ReportsLayout() {
                                     </button>
                                 </td>
                                 <td> 
-                                    <button onClick={() => handleDownloadReport(report.id)}>
+                                    <a href="/DoctorReport.pdf" download="DoctorReport">
+                                    <button>
                                         Download Report
                                     </button>
+                                    </a>
                                 </td>
                             </tr>
                         ))}
@@ -70,14 +72,7 @@ export default function ReportsLayout() {
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <button className="close-btn" onClick={() => setShowReport(false)}>✖</button>
-                        <h3>Report Details</h3>
-                        <textarea
-                            rows="5"
-                            cols="50"
-                            placeholder="Enter report details..."
-                            value={reports.find(r => r.id === reportId)?.report || ""}
-                            onChange={(e) => handleSubmit(reportId, e.target.value)}
-                        />
+                        <iframe src='/DoctorReport.pdf' width='100%' height='500px' />
                     </div>
                 </div>
             )}
